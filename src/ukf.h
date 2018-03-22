@@ -29,16 +29,16 @@ public:
   MatrixXd P_; //done
 
   ///* predicted sigma points matrix
-  MatrixXd Xsig_pred_; //done
+  MatrixXd Xsig_pred_;
 
   ///* time when the state is true, in us
   long long time_us_; //done
 
   ///* Process noise standard deviation longitudinal acceleration in m/s^2
-  double std_a_; //done --> requires modification
+  double std_a_; //done --> requires changes
 
   ///* Process noise standard deviation yaw acceleration in rad/s^2
-  double std_yawdd_; //done --> requires modification
+  double std_yawdd_; //done -->reqires changes
 
   ///* Laser measurement noise standard deviation position1 in m
   double std_laspx_; //done
@@ -56,24 +56,37 @@ public:
   double std_radrd_ ; //done
 
   ///* Weights of sigma points
-  VectorXd weights_;
+  VectorXd weights_; //done
 
   ///* State dimension
   int n_x_; //done
 
   ///* Augmented state dimension
-  int n_aug_;
+  int n_aug_; //done
 
   ///* Sigma point spreading parameter
   double lambda_; //done
 
-  ///* NIS radar = [framecount_radar, framecount > 7.815
-  VectorXd nis_radar_; //done
+  ///* Bottom right Matrix for P_augmented
+  MatrixXd P_aug_bottom_right_; //done
 
-  ///* NIS lidar = [framecount_lidar, framecount > 5.991
+  ///* Lidar measurement matrix
+  MatrixXd H_Lidar_; //done
+
+  ///* Lidar measurement matrix transposed
+  MatrixXd H_Lidar_t_; //done
+
+  ///* Lidar measurement covariance matrix
+  MatrixXd R_Lidar_; //done
+
+  ///* Radar measurement covariance matrix
+  MatrixXd R_Radar_; //done
+
+  ///* NIS Vector for Radar
   VectorXd nis_lidar_; //done
 
-
+  ///*NIS Vector for Lidar
+  VectorXd nis_radar_; //done
   /**
    * Constructor
    */
@@ -108,6 +121,12 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+
+  /**
+  * Normalizes Angle between -M_PI & M_PI
+  * @param angle to be normalized
+  */
+  void NormAngle(double &angle);
 };
 
 #endif /* UKF_H */
